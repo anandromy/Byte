@@ -8,6 +8,9 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Input } from '@/components/ui/input'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
+import axios from 'axios'
+import { useRouter } from 'next/navigation'
+import toast from 'react-hot-toast'
 
 
 const formSchema = z.object({
@@ -17,6 +20,7 @@ const formSchema = z.object({
 });
 
 const CreatePage = () => {
+    const router = useRouter();
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -26,9 +30,14 @@ const CreatePage = () => {
     })
 
     const { isSubmitting, isValid } = form.formState;
-    const onSubmit = (values: z.infer<typeof formSchema>) => {
-        console.log(values);
-    }
+    const onSubmit = async (values: z.infer<typeof formSchema>) => {
+        try{
+            const response = await axios.post('/api/course', values)
+            router.push(`/teacher/courses/${response.data.id}`)
+        }catch{
+            toast.error("Something went wrong")
+        }
+    }   
 
 
     return(
