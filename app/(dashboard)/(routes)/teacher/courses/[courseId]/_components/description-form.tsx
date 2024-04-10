@@ -13,9 +13,11 @@ import {
     FormItem,
     FormMessage
 } from "@/components/ui/form"
-import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { cn } from '@/lib/utils';
+import toast from 'react-hot-toast';
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
 interface DescriptionFormProps{
     initialData: {
@@ -34,6 +36,7 @@ export const DescriptionForm = ({ initialData, courseId }: DescriptionFormProps)
 
     const [ isEditing, setIsEditing ] = useState(false)
     const toggleEdit = () => setIsEditing((current) => !current)
+    const router = useRouter()
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -43,7 +46,14 @@ export const DescriptionForm = ({ initialData, courseId }: DescriptionFormProps)
     const { isSubmitting, isValid } = form.formState
 
     const onSubmit = async (values : z.infer<typeof formSchema>) => {
-        console.log(values)
+        try{
+            await axios.patch(`/api/courses/${courseId}`, values)
+            toast.success("Course Updated")
+            toggleEdit()
+            router.refresh()
+        }catch{
+            toast.error("Something went wrong")
+        }
     }
 
     return(
