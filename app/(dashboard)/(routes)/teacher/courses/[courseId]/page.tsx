@@ -7,6 +7,7 @@ import { TitleForm } from "./_components/title-form";
 import { DescriptionForm } from "./_components/description-form";
 import { ImageForm } from "./_components/image-form";
 import { Categoryform } from "./_components/category-form";
+import { PriceForm } from "./_components/price-form";
 
 
 const CourseIdPage = async ({ params }: { params: { courseId: string }}) => {
@@ -96,12 +97,16 @@ const CourseIdPage = async ({ params }: { params: { courseId: string }}) => {
                         </div>
                     </div>
                     <div>
-                    <div className="flex items-center gap-x-2">
-                        <IconBadge icon={CircleDollarSign}></IconBadge>
-                        <h2 className="text-xl">
-                            Sell you course
-                        </h2>
-                    </div>
+                        <div className="flex items-center gap-x-2">
+                            <IconBadge icon={CircleDollarSign}></IconBadge>
+                            <h2 className="text-xl">
+                                Sell you course
+                            </h2>
+                        </div>
+                        <PriceForm 
+                            initialData={course}
+                            courseId={course.id}
+                        />
                     </div>
                 </div>
             </div>
