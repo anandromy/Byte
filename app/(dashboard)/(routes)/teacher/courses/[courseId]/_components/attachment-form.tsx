@@ -76,7 +76,7 @@ export const AttachmentForm = ({ initialData, courseId }: AttachmentFormProps) =
                         </p>
                     )}
                     {initialData.attachments.length > 0 && (
-                        <div>
+                        <div className='space-y-2'>
                             {initialData.attachments.map((attachment) => (
                                 <div 
                                 key={attachment.id}
