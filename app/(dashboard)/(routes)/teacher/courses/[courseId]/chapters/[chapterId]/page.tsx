@@ -5,6 +5,7 @@ import { ArrowLeft, LayoutDashboard } from "lucide-react"
 import Link from "next/link"
 import { redirect } from "next/navigation"
 import { ChapterTitleForm } from "./_components/chapter-title-form"
+import { ChapterDescriptionFrom } from "./_components/chapter-description-form"
 
 const ChapterIdPage = async (
     { params }: { params: { courseId: string, chapterId: string }}
@@ -68,6 +69,11 @@ const ChapterIdPage = async (
                             </h2>
                         </div>
                         <ChapterTitleForm 
+                            initialData={chapter}
+                            chapterId={params.chapterId}
+                            courseId={params.courseId}
+                        />
+                        <ChapterDescriptionFrom 
                             initialData={chapter}
                             chapterId={params.chapterId}
                             courseId={params.courseId}
